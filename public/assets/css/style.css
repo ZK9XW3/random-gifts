@@ -1,0 +1,29 @@
+body {
+    background-color: #FFEAD2;
+}
+
+h1 {
+    color: #218380;
+}
+
+h2 {
+    color: #020100;
+}
+
+
+.names-content {
+    text-align: center;
+}
+
+.img-img {
+    width: 100%;
+    max-width: 600px;
+}
+
+.input-group-text {
+    background-color: #FFEAD2;
+}
+
+.btn-info {
+    background-color: #218380;
+}
