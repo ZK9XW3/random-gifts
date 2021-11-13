@@ -10,7 +10,7 @@ class DataParser
         $participants = [];
 
         // Each iteration put a new entry in our array
-        for ($i=0; $i < $maxIndex; $i++) { 
+        for ($i=0; $i <= $maxIndex; $i++) { 
             $participants[] = ['firstName' => $data['firstName' . $i], 'lastName' => $data['lastName' . $i]];
         }
         

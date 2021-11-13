@@ -31,13 +31,14 @@ class MainController extends AbstractController
 
         // Count array lenght to get maxIndex to pass to service dataParser
         $arrayLenght = count($data);
-        $maxIndex = $arrayLenght / 2;
+        $maxIndex = ($arrayLenght / 2) - 1;
+        // dump($maxIndex);
 
         // On envoie les données vers le service parse Data
-        $parsedData = $dataParser->dataParse($data, $maxIndex);
+        $participantsArray = $dataParser->dataParse($data, $maxIndex);
 
         // On envoie les data parsed au service randomPicker
-        $randomResults = $randomPicker->randomPicker($parsedData);
+        $randomResults = $randomPicker->randomPicker($participantsArray, $maxIndex);
         dd($randomResults);
         
         
