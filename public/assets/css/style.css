@@ -20,10 +20,38 @@ h2 {
     max-width: 600px;
 }
 
+.inputs-container {
+    width: 100%;
+}
+
 .input-group-text {
     background-color: #FFEAD2;
 }
 
 .btn-info {
     background-color: #218380;
+}
+
+.template-node {
+    width: 100%;
+}
+
+.submit-container {
+    width: 100%;
+}
+
+.submit-btn {
+    width: 100%;
+}
+
+.new-inputs-container {
+    width: 100%;
+}
+
+.add-button-container {
+    min-width: 100%;
+}
+
+.add-button {
+    width: 100%;
 }

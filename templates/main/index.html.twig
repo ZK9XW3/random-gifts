@@ -13,14 +13,36 @@
         <div class="names-content">
             <p class="names-content-p"></p>
         </div>
-        <div class="form-container d-flex justify-content-center mb-5 mx-5">
-            <div class="input-group-prepend">
-                <span class="input-group-text d-none d-lg-block">First and last name</span>
+        <form action="{{ path('submit') }}" method="post" class="d-flex flex-column align-items-center mx-5 mb-5 form-container" id="form-container">
+            <div class="template-node">
+                <div class="inputs-container d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text d-none d-lg-block">First and last name</span>
+                    </div>
+                    <input type="text" name="firstName0" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name">
+                    <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name">
+                </div>
+                {# Insert template here with JS #}
+                
             </div>
-            <input type="text" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name">
-            <input type="text" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name">
-            <button type="button" class="btn btn-info" id="add-button">Add</button>
+            <div class="add-button-container mt-2">
+                <button type="button" class="btn btn-info add-button" id="add-button">Add participant</button>
+            </div>
+            <div class="submit-container mt-4">
+                <button type="submit" class="btn btn-info submit-btn">Submit</button>
+            </div>
+        </form>
     </div>
+
+<template id="template">
+    <div class="inputs-container d-flex">
+        <div class="input-group-prepend">
+            <span class="input-group-text d-none d-lg-block">First and last name</span>
+        </div>
+        <input type="text" name="firstName" aria-label="First name" class="form-control" id="first-name-input-last" placeholder="First name">
+        <input type="text" name="lastName" aria-label="Last name" class="form-control" id="last-name-input-last" placeholder="Last name">
+    </div>
+</template>
 
 </main>
 {% endblock %}
