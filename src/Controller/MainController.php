@@ -26,25 +26,32 @@ class MainController extends AbstractController
      */
     public function submit(Request $request, RandomPicker $randomPicker, DataParser $dataParser)
     {
-        // dd($request->request->all());
+        // Get the data from request
         $data = $request->request->all();
-                                                                                                
-        // Count array lenght to get maxIndex to pass to service dataParser
-        $arrayLenght = count($data);
-        $maxIndex = ($arrayLenght / 2) - 1;
-        // dump($maxIndex);
 
-        // On envoie les données vers le service parse Data
-        $participantsArray = $dataParser->dataParse($data, $maxIndex);
+        // get the csrf token
+        $submittedToken = $request->request->get('token');
+                    
+        // If csrftoken is valid
+        if ($this->isCsrfTokenValid('form-token', $submittedToken)) {
+            
+            // Count array lenght to get maxIndex to pass to service dataParser
+            $arrayLenght = count($data);
+            $maxIndex = ($arrayLenght / 2) - 1;
+    
+            // On envoie les données vers le service parse Data
+            $participantsArray = $dataParser->dataParse($data, $maxIndex);
+    
+            // On envoie les data parsed au service randomPicker
+            $randomResults = $randomPicker->randomPicker($participantsArray, $maxIndex);
+            dump($randomResults);
+    
+            // Redirect to a view with the Data
+            return $this->render('main/submit.html.twig', [
+                'results' => $randomResults,
+            ]);
+        } 
 
-        // On envoie les data parsed au service randomPicker
-        $randomResults = $randomPicker->randomPicker($participantsArray, $maxIndex);
-        dump($randomResults);
-
-        // Redirect to a view with the Data
-        return $this->render('main/submit.html.twig', [
-            'results' => $randomResults,
-        ]);
         
         
     }

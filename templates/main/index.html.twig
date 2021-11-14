@@ -23,7 +23,6 @@
                     <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name">
                 </div>
                 {# Insert template here with JS #}
-                
             </div>
             <div class="add-button-container mt-2">
                 <button type="button" class="btn btn-info add-button" id="add-button">Add participant</button>
@@ -31,6 +30,7 @@
             <div class="submit-container mt-4">
                 <button type="submit" class="btn btn-info submit-btn">Submit</button>
             </div>
+            <input type="hidden" name="token" value="{{ csrf_token('form-token') }}">
         </form>
     </div>
 

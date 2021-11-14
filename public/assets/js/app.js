@@ -20,7 +20,7 @@ addButton.addEventListener("click", e => {
         templateNode.appendChild(clonedTemplate);
     }   
 
-    // When new line inserted set Input name for form to work
+    // When new line inserted set Input name for form to work with $_POST request
     function setInputName() {
 
         // set attribute name a firstName{countAddButtonClicks} & lastName{countAddButtonClicks} .
