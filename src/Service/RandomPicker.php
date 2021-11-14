@@ -56,30 +56,51 @@ class RandomPicker
 
             // On fait une association entre le participant Current et le random participant
             $association = [$currentParticipant, $randomParticipant];
-
+            
+            $i = 0;
             // On verifie qu'il ne soit pas de la meme famille et que ce ne soit pas lui meme
-            // si c'est le cas on change le receiver et l'association giver/receiver
             while ($currentParticipant == $randomParticipant || $currentParticipant['lastName'] == $randomParticipant['lastName']) {
                 
-                // On pick un nombre au hasard compris entre 0 et le nb max de participants mais seulement dont l'index est valide
+                if ($i < 50) {
+                    
+                    // On pick un nombre au hasard compris entre 0 et le nb max de participants mais seulement dont l'index est valide
+                    $validRandomIndex = $this->randomIndex($participants, $maxIndex);
+                    
+                    // On choisi un participant au hasard
+                    $randomParticipant = $participants[$validRandomIndex];
+                    
+                    // On fait une association entre le participant Current et le random participant
+                    $association = [$currentParticipant, $randomParticipant];
+                    dump($association); 
+                    
+                    // On increment $i
+                    $i = $i + 1;
+
+                } if ($i >= 50) {
+
+                    break;
+                }
+                
+            }
+            dump('i get out of the 1st while' . 'itrations = ' . $i);
+
+
+            // Si on a pas pu valider le while precedent on execute ce while avec des conditions moins exigeantes
+            while ($currentParticipant == $randomParticipant) {
+
                 $validRandomIndex = $this->randomIndex($participants, $maxIndex);
 
-                // On choisi un participant au hasard
                 $randomParticipant = $participants[$validRandomIndex];
-
-                 // On fait une association entre le participant Current et le random participant
-                $association = [$currentParticipant, $randomParticipant];
-                // dump($association); 
             }
 
             // Si les verifications sont passées on execute le code suivant
             // On insere dans le tableau l'association valide sous la forme giver - receiver
             $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
-            // dump($results);
+            dump($results);
 
             // on retire le receiver du tableau des participants par son index
             unset($participants[$validRandomIndex]);
-            // dump($participants);
+            dump($participants);
 
         }
 

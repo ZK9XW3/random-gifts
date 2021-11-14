@@ -28,7 +28,7 @@ class MainController extends AbstractController
     {
         // dd($request->request->all());
         $data = $request->request->all();
-
+                                                                                                
         // Count array lenght to get maxIndex to pass to service dataParser
         $arrayLenght = count($data);
         $maxIndex = ($arrayLenght / 2) - 1;
