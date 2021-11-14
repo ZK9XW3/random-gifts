@@ -2,61 +2,89 @@
 
 namespace App\Service;
 
+
 class RandomPicker
 {
-    
-    public function randomPicker($participants, $maxIndex)
+    /**
+     * Function wich generates random Index based on the existing indexes in participants array
+     *
+     * @param $participants
+     * @param $maxIndex
+     * @return void
+     */
+    public function randomIndex($participants, $maxIndex)
     {
-        // On mets en place la mecanique d'association aleatoire
-        // On pick un nombre au hasard compris entre 0 et le nb max de participants
+        // On genere un chiffre aleatoire entre 0 et l'index max de notre tableau
         $randomIndex = rand(0, $maxIndex);
 
-        // test
-        /* dump($randomIndex);
-        dump($parsedData);
-        dd($parsedData[$randomIndex]); */
+        // On verifie que la clef correspond bien a un index de notre tableau participants
+        // et tant que la clef associée au tableau participants n'existe pas on regenere le randomIndex
+        while (!array_key_exists($randomIndex, $participants)) {
+                
+            // on regenere randomIndex
+            $randomIndex = rand(0, $maxIndex);
 
-        // On declare un tableau
+        } 
+
+        dump('A new key is associated. Key is ' . $randomIndex);
+        return $randomIndex;
+    }
+
+    /**
+     * Function to randomly pick participants and create an array in wich we find a giver associated to a receiver
+     *
+     * @param $participants
+     * @param $maxIndex
+     * @return void
+     */
+    public function randomPicker($participants, $maxIndex)
+    {
+        // On déclare le tableau participants récuếré par les paramètres
+        $participants;
+
+        // On declare un tableau pour stocker les résultats
         $results = [];
 
         // On prends le participant 1 et on l'associe avec un pariticpant random via l'index random pris precedemment
         foreach ($participants as $currentParticipant) {
 
-            // On choisi un participant au hasard
-            $randomParticipant = $participants[$randomIndex];
+            // on choisi un nombre au hasard avec notre fonction randomIndex
+            $validRandomIndex = $this->randomIndex($participants, $maxIndex);
             
+            // On choisi un participant au hasard
+            $randomParticipant = $participants[$validRandomIndex];
+
             // On fait une association entre le participant Current et le random participant
             $association = [$currentParticipant, $randomParticipant];
-            dump($association); 
 
-
-            // TODO Remplacer le if par une boucle while; Tant que randomParticipant = currentParticipant OU que currentParticipant.lastName = randomParticipant.lastName : chaange le randomIndex du randomParticipant
             // On verifie qu'il ne soit pas de la meme famille et que ce ne soit pas lui meme
-            if ($currentParticipant != $randomParticipant && $currentParticipant['lastName'] != $randomParticipant['lastName']) {
-               
-                dd('it worked');
+            // si c'est le cas on change le receiver et l'association giver/receiver
+            while ($currentParticipant == $randomParticipant || $currentParticipant['lastName'] == $randomParticipant['lastName']) {
+                
+                // On pick un nombre au hasard compris entre 0 et le nb max de participants mais seulement dont l'index est valide
+                $validRandomIndex = $this->randomIndex($participants, $maxIndex);
 
-                // on insere dans le tableau l'association valide
-                $results [] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
+                // On choisi un participant au hasard
+                $randomParticipant = $participants[$validRandomIndex];
 
-                // on retire le receiver du tableau des participants
-
-            } else {
-                // TODO On doit changer le randomParticipant DONC BESOIN DE FAIRE ENTRER LE randomIndex dans la boucle
-                // A tester
-                $i -= 1;
-
-                dd('it didnt worked');
+                 // On fait une association entre le participant Current et le random participant
+                $association = [$currentParticipant, $randomParticipant];
+                // dump($association); 
             }
 
-
+            // Si les verifications sont passées on execute le code suivant
+            // On insere dans le tableau l'association valide sous la forme giver - receiver
+            $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
             dump($results);
-        }
-        // Si c'est ok on sort le receiver
-        // On recommence
-        // On les resultats dans un tableau ou dans des variables au controller
 
-        // array :
-        // ass1 : partcipant 1, participant 4
+            // on retire le receiver du tableau des participants par son index
+            unset($participants[$validRandomIndex]);
+            dump($participants);
+
+        }
+
+        // On transmets les resultats au controller
+        dump($results);
+        return $results;  
     }
 }
