@@ -26,7 +26,7 @@ class RandomPicker
 
         } 
 
-        dump('A new key is associated. Key is ' . $randomIndex);
+        // dump('A new key is associated. Key is ' . $randomIndex);
         return $randomIndex;
     }
 
@@ -75,16 +75,16 @@ class RandomPicker
             // Si les verifications sont passées on execute le code suivant
             // On insere dans le tableau l'association valide sous la forme giver - receiver
             $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
-            dump($results);
+            // dump($results);
 
             // on retire le receiver du tableau des participants par son index
             unset($participants[$validRandomIndex]);
-            dump($participants);
+            // dump($participants);
 
         }
 
         // On transmets les resultats au controller
-        dump($results);
+        // dump($results);
         return $results;  
     }
 }

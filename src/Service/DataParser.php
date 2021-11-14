@@ -4,6 +4,13 @@ namespace App\Service;
 
 class DataParser 
 {
+    /**
+     * Parses the array into a multidimensionnal array
+     *
+     * @param $data
+     * @param $maxIndex
+     * @return void
+     */
     public function dataParse($data, $maxIndex)
     {
         // Declare new array
@@ -14,7 +21,6 @@ class DataParser
             $participants[] = ['firstName' => $data['firstName' . $i], 'lastName' => $data['lastName' . $i]];
         }
         
-        // dump($participants[2]['firstName']);
         return $participants;
         
     }
