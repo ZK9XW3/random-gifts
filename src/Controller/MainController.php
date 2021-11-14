@@ -45,12 +45,17 @@ class MainController extends AbstractController
             // On envoie les data parsed au service randomPicker
             $randomResults = $randomPicker->randomPicker($participantsArray, $maxIndex);
             dump($randomResults);
-    
+
             // Redirect to a view with the Data
             return $this->render('main/submit.html.twig', [
                 'results' => $randomResults,
             ]);
-        } 
+
+        } else {
+
+            $this->addFlash('notice', 'An error occured please try again');
+            return $this->redirectToRoute('home');
+        }
 
         
         
