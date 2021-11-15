@@ -8,6 +8,7 @@ let firstNameInput = document.getElementById('first-name-input');
 let lastNameInput = document.getElementById('last-name-input');
 let firstNameError = document.getElementById('first-name-error');
 let inputs = document.getElementsByClassName('form-control');
+let alertBox = document.getElementById('alert-box');
 
 
 //Listener on addButton
@@ -67,9 +68,16 @@ submitButton.addEventListener('click', e => {
       input.classList.add('is-invalid');
       input.setAttribute('placeholder', 'Enter a valid first name and last name');
 
+      // and display message in alertbox
+      alertBox.innerHTML = 'Value must be letters, numbers or - (hyphen) and cannot be null';
+
+
     } else {
       // if value is ok remove class is-invalid
       input.classList.remove('is-invalid');
+      
+      // and undisplay message in alertbox
+      alertBox.innerHTML = '';
     }
     
   }
