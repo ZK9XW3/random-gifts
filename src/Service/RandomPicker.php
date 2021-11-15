@@ -82,7 +82,7 @@ class RandomPicker
                 }
                 
             }
-            dump('i get out of the 1st while' . 'itrations = ' . $i);
+            dump('i get out of the 1st while' . 'iterations = ' . $i);
 
 
             // Si on a pas pu valider le while precedent on execute ce while avec des conditions moins exigeantes
@@ -91,7 +91,51 @@ class RandomPicker
                 $validRandomIndex = $this->randomIndex($participants, $maxIndex);
 
                 $randomParticipant = $participants[$validRandomIndex];
+
+                // TODO AU bout d'un certain nombre d'iterations et si il ne reste qu'un participant dans le tableau
+                // TODO on dit au dernier current participant de choisir le receiver de l'association precedente
+                // TODO ET on dit a l'avant dernier current participant de choisir le dernier participant comme receiver
+
+                // TODO ALTERNATIVE
+                // Quand il ne reste qu'un pariticipant dans le tableau 
+                // Si currentParticipant == randomParticipant
+                // le current participant choisi le random participant (donc le receiver) de l'associaiton precedente
+                //  le giver precedent s'associe au randomParticipant
             }
+
+           
+            // if this is the last value in participants array
+            if (count($participants) == 1) {
+
+                dump($results);
+                dump('this is the last value in participants array');
+
+                // Si currentParticipant == randomParticipant
+                // Soit on refait le tirage
+                // Soit un modifie les results
+
+                // TEST
+                // on recuperes le dernier receiver du tableau results
+                $lastArrayReceiver = end($results)['receiver'];
+                dump($lastArrayReceiver);
+
+                // TODO on modifie l'entrée du tableau WORKING
+                // dd($currentParticipant['firstName']);
+                // dd(end($results)['receiver']['firstName']);
+                // dd($results[2]['receiver']);
+                $results[2]['receiver'] = ['firstName' => $currentParticipant['firstName'], 'lastName' => $currentParticipant['lastName']]; 
+                dd($results);
+
+                // on  crée la dernière ligne du tableau et on ajoute lastArrayReceiver comme receiver
+                $results[] = ['giver' => $currentParticipant, 'receiver' => $lastArrayReceiver];
+                dd($results);
+
+                if ($currentParticipant == $randomParticipant) {
+                    
+                    // on ajoute l'avant dernier receiver dans la dernière ligne du tableau results
+                    // $results[] = ['giver' => $results[]]
+                }
+            };
 
             // Si les verifications sont passées on execute le code suivant
             // On insere dans le tableau l'association valide sous la forme giver - receiver
