@@ -77,7 +77,7 @@ class RandomPicker
                     $i = $i + 1;
 
                 } if ($i >= 50) {
-
+                    // Si on a tester 50 fois sans trouver de solution on break du while
                     break;
                 }
                 
@@ -85,25 +85,45 @@ class RandomPicker
             dump('i get out of the 1st while' . 'iterations = ' . $i);
 
 
-            // Si on a pas pu valider le while precedent on execute ce while avec des conditions moins exigeantes
-            while ($currentParticipant == $randomParticipant) {
+            // Si le nombre de pariticpants est differents de 0
+            if (count($participants) != 0 || count($participants) != 1) {
 
-                $validRandomIndex = $this->randomIndex($participants, $maxIndex);
+                // Si on a pas pu valider le while precedent on execute ce while avec des conditions moins exigeantes
+                while ($currentParticipant == $randomParticipant) {
 
-                $randomParticipant = $participants[$validRandomIndex];
+                    dump("in the easy while");
 
+                    $validRandomIndex = $this->randomIndex($participants, $maxIndex);
+
+                    $randomParticipant = $participants[$validRandomIndex];
+
+                }
+                
+                // On compte le nombre de participants
+                dump(count($participants));
+
+                // On insere dans le tableau l'association valide sous la forme giver - receiver
+                $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
+                dump($results);
+
+                // on retire le receiver du tableau des participants par son index
+                unset($participants[$validRandomIndex]);
+                dump($participants);
             }
 
-           
+            // TODO quand on entre dans cette condition l'iteration du foreach n'as pas eu lieu donc le currentParticipant n'est pas le dernier participant mais l'avant dernier
+            // TODO il faut pouvoir laisser l'iteration se faire et ensuite entrer dans cette condition
             // if this is the last value in participants array
             if (count($participants) == 1) {
 
-                dump($results);
                 dump('this is the last value in participants array');
+
+                dump($currentParticipant, $randomParticipant);
 
                 // Si currentParticipant == randomParticipant on modifie le tableau results // on aurait pu refaire le tirage aussi
                 if ($currentParticipant == $randomParticipant) {
                     
+
                     // on recuperes le dernier receiver du tableau results
                     $lastArrayReceiver = end($results)['receiver'];
                     dump($lastArrayReceiver);
@@ -114,22 +134,21 @@ class RandomPicker
 
                     // on  crée la dernière ligne du tableau et on ajoute lastArrayReceiver comme receiver
                     $results[] = ['giver' => $currentParticipant, 'receiver' => $lastArrayReceiver];
-                    dd($results);
+                    dd($results);    
 
-                    // TODO Il faut absolument empecher l'execution de la ligne 126
-                    
+                } else {
+
+                    dump("in the else of the last participant if");
+
+                    // On insere dans le tableau l'association valide sous la forme giver - receiver
+                    $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
+                    dump($results);
+
+                    // on retire le receiver du tableau des participants par son index
+                    unset($participants[$validRandomIndex]);
+                    dump($participants);
                 }
             };
-
-            // Si les verifications sont passées on execute le code suivant
-            // On insere dans le tableau l'association valide sous la forme giver - receiver
-            $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
-            dump($results);
-
-            // on retire le receiver du tableau des participants par son index
-            unset($participants[$validRandomIndex]);
-            dump($participants);
-
         }
 
         // On transmets les resultats au controller
