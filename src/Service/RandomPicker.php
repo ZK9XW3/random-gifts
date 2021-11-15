@@ -92,15 +92,6 @@ class RandomPicker
 
                 $randomParticipant = $participants[$validRandomIndex];
 
-                // TODO AU bout d'un certain nombre d'iterations et si il ne reste qu'un participant dans le tableau
-                // TODO on dit au dernier current participant de choisir le receiver de l'association precedente
-                // TODO ET on dit a l'avant dernier current participant de choisir le dernier participant comme receiver
-
-                // TODO ALTERNATIVE
-                // Quand il ne reste qu'un pariticipant dans le tableau 
-                // Si currentParticipant == randomParticipant
-                // le current participant choisi le random participant (donc le receiver) de l'associaiton precedente
-                //  le giver precedent s'associe au randomParticipant
             }
 
            
@@ -110,30 +101,23 @@ class RandomPicker
                 dump($results);
                 dump('this is the last value in participants array');
 
-                // Si currentParticipant == randomParticipant
-                // Soit on refait le tirage
-                // Soit un modifie les results
-
-                // TEST
-                // on recuperes le dernier receiver du tableau results
-                $lastArrayReceiver = end($results)['receiver'];
-                dump($lastArrayReceiver);
-
-                // TODO on modifie l'entrée du tableau WORKING
-                // dd($currentParticipant['firstName']);
-                // dd(end($results)['receiver']['firstName']);
-                // dd($results[2]['receiver']);
-                $results[2]['receiver'] = ['firstName' => $currentParticipant['firstName'], 'lastName' => $currentParticipant['lastName']]; 
-                dd($results);
-
-                // on  crée la dernière ligne du tableau et on ajoute lastArrayReceiver comme receiver
-                $results[] = ['giver' => $currentParticipant, 'receiver' => $lastArrayReceiver];
-                dd($results);
-
+                // Si currentParticipant == randomParticipant on modifie le tableau results // on aurait pu refaire le tirage aussi
                 if ($currentParticipant == $randomParticipant) {
                     
-                    // on ajoute l'avant dernier receiver dans la dernière ligne du tableau results
-                    // $results[] = ['giver' => $results[]]
+                    // on recuperes le dernier receiver du tableau results
+                    $lastArrayReceiver = end($results)['receiver'];
+                    dump($lastArrayReceiver);
+
+                    // On modifie l'entrée du tableau pout mettre notre current participant comme receiver
+                    $results[2]['receiver'] = ['firstName' => $currentParticipant['firstName'], 'lastName' => $currentParticipant['lastName']]; 
+                    dump($results);
+
+                    // on  crée la dernière ligne du tableau et on ajoute lastArrayReceiver comme receiver
+                    $results[] = ['giver' => $currentParticipant, 'receiver' => $lastArrayReceiver];
+                    dd($results);
+
+                    // TODO Il faut absolument empecher l'execution de la ligne 126
+                    
                 }
             };
 
