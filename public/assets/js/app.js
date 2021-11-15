@@ -3,8 +3,14 @@ let addButton = document.getElementById('add-button');
 let newInputsContainer = document.querySelector('.new-inputs-container');
 let templateNode = document.querySelector('.template-node');
 let countAddButtonClicks = 0;
+let submitButton = document.querySelector('.submit-btn');
+let firstNameInput = document.getElementById('first-name-input');
+let lastNameInput = document.getElementById('last-name-input');
+let firstNameError = document.getElementById('first-name-error');
+let inputs = document.getElementsByClassName('form-control');
 
-//Listener
+
+//Listener on addButton
 addButton.addEventListener("click", e => {
 
     // Count nb of clicks on add button
@@ -36,5 +42,36 @@ addButton.addEventListener("click", e => {
     insertInputsContainer();
     setInputName();
 
+
+})
+
+// Listener on SubmitButton
+submitButton.addEventListener('click', e => {
+
+  // check all input elements with form-control class
+  for (let input of inputs) {
+    
+    // Trim all the inputs
+    let inputValueTrim = input.value.trim();
+
+    // regex checking the input is md only of letters digit and hyphen
+    let regex = /^[A-Za-z0-9.-]+$/
+    
+    // if they have no value
+    if (!inputValueTrim || inputValueTrim.length < 2 || !inputValueTrim.match(regex)) {
+
+      // prevent form submission
+      e.preventDefault();
+      
+      // and add is-invalid class + change placeholder message
+      input.classList.add('is-invalid');
+      input.setAttribute('placeholder', 'Enter a valid first name and last name');
+
+    } else {
+      // if value is ok remove class is-invalid
+      input.classList.remove('is-invalid');
+    }
+    
+  }
 
 })

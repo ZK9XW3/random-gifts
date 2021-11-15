@@ -13,14 +13,14 @@
         <div class="names-content">
             <p class="names-content-p"></p>
         </div>
-        <form action="{{ path('submit') }}" method="post" class="d-flex flex-column align-items-center mx-5 mb-5 form-container" id="form-container">
+        <form action="{{ path('submit') }}" method="post" class="d-flex flex-column align-items-center mx-5 mb-5 form-container needs-validation" id="form-container" novalidate>
             <div class="template-node">
                 <div class="inputs-container d-flex">
                     <div class="input-group-prepend">
                         <span class="input-group-text d-none d-lg-block">First and last name</span>
                     </div>
-                    <input type="text" name="firstName0" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name" required>
-                    <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name" required>
+                    <input type="text" name="firstName0" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name" required maxlength="20">
+                    <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name" required maxlength="20">
                 </div>
                 {# Insert template here with JS #}
             </div>
@@ -39,8 +39,8 @@
         <div class="input-group-prepend">
             <span class="input-group-text d-none d-lg-block">First and last name</span>
         </div>
-        <input type="text" name="firstName" aria-label="First name" class="form-control" id="first-name-input-last" placeholder="First name" required>
-        <input type="text" name="lastName" aria-label="Last name" class="form-control" id="last-name-input-last" placeholder="Last name" required>
+        <input type="text" name="firstName" aria-label="First name" class="form-control" id="first-name-input-last" placeholder="First name" required maxlength="20">
+        <input type="text" name="lastName" aria-label="Last name" class="form-control" id="last-name-input-last" placeholder="Last name" required maxlength="20">
     </div>
 </template>
 
