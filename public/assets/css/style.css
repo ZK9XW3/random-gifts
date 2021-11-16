@@ -55,3 +55,8 @@ h2 {
 .add-button {
     width: 100%;
 }
+
+.table-header {
+    background-color: #218380;
+    color: white;
+}

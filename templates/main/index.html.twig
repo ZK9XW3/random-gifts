@@ -13,24 +13,25 @@
         <div class="names-content">
             <p class="names-content-p"></p>
         </div>
-        <form action="{{ path('submit') }}" method="post" class="d-flex flex-column align-items-center mx-5 mb-5 form-container" id="form-container">
+        <form action="{{ path('submit') }}" method="post" class="d-flex flex-column align-items-center mx-sm-5 mb-5 form-container needs-validation" id="form-container" novalidate>
             <div class="template-node">
                 <div class="inputs-container d-flex">
                     <div class="input-group-prepend">
                         <span class="input-group-text d-none d-lg-block">First and last name</span>
                     </div>
-                    <input type="text" name="firstName0" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name">
-                    <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name">
+                    <input type="text" name="firstName0" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name" required maxlength="20">
+                    <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name" required maxlength="20">
                 </div>
                 {# Insert template here with JS #}
-                
             </div>
+            <div class="alert-box mt-2" id="alert-box" role="alert"></div>
             <div class="add-button-container mt-2">
                 <button type="button" class="btn btn-info add-button" id="add-button">Add participant</button>
             </div>
             <div class="submit-container mt-4">
                 <button type="submit" class="btn btn-info submit-btn">Submit</button>
             </div>
+            <input type="hidden" name="token" value="{{ csrf_token('form-token') }}">
         </form>
     </div>
 
@@ -39,8 +40,8 @@
         <div class="input-group-prepend">
             <span class="input-group-text d-none d-lg-block">First and last name</span>
         </div>
-        <input type="text" name="firstName" aria-label="First name" class="form-control" id="first-name-input-last" placeholder="First name">
-        <input type="text" name="lastName" aria-label="Last name" class="form-control" id="last-name-input-last" placeholder="Last name">
+        <input type="text" name="firstName" aria-label="First name" class="form-control" id="first-name-input-last" placeholder="First name" required maxlength="20">
+        <input type="text" name="lastName" aria-label="Last name" class="form-control" id="last-name-input-last" placeholder="Last name" required maxlength="20">
     </div>
 </template>
 

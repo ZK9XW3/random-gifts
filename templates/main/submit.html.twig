@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Random Gift - Submit{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('notice') %}
+<div class="alert alert-danger" role="alert">
+	<strong>Oupsss !!!</strong>
+	{{ message }}
+</div>
+
+{% endfor %}
+
+<main class="container">
+    <div class="content">
+        <h1 class="text-center mt-5">Random Gift Picker</h1>
+        <h2 class="text-center mt-3">And let the magic happen !!! Results below</h2>
+        <div class="img-container d-flex justify-content-center">
+            <img class="img-img" src="./assets/img/christmas-tree-gifts.png" alt="christmas tree and gifts">
+        </div>
+        <div class="names-content">
+            <table class="table table-sm table-hover table-borderless mb-5">
+                <thead class="table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Giver</th>
+                        <th scope="col">Receiver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ result.giver.firstName ~ " " ~ result.giver.lastName }}</td>
+                        <td>{{ result.receiver.firstName ~ " " ~ result.receiver.lastName }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            <div class="add-button-container mt-2 mb-5">
+                <a href="{{ path('home') }}" type="button" class="btn btn-info add-button" id="add-button">Home</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
