@@ -89,7 +89,7 @@ submitButton.addEventListener('click', e => {
     }
 
     /**
-     * check if the number of participants are even
+     * ! UNUSED check if the number of participants are even
      */
     function isEven() {
         
@@ -112,8 +112,32 @@ submitButton.addEventListener('click', e => {
         }
     }
 
+    /**
+     * check if there is at least two participants
+     */
+     function isMoreThanOne() {
+        
+        // check participants are even and not odd
+        // check how many inputs-container class inputs we have
+        let inputsContainerLength = inputsContainer.length;
+        
+    
+        // if it's odd
+        if (inputsContainerLength <= 1 ) {
+            
+            console.log("more than 1 participant");
+
+            // prevent default form
+            e.preventDefault();
+     
+            // and add message to the alertBox
+            alertBox.innerHTML = "For the magic to happen you need more than one participant !!";
+            
+        }
+    }
+
 
     checkInputsValue();
-    isEven();
+    isMoreThanOne();
 
 })
