@@ -62,7 +62,7 @@ submitButton.addEventListener('click', e => {
             let inputValueTrim = input.value.trim();
     
             // regex checking the input is md only of letters digit and hyphen
-            let regex = /^[A-Za-z0-9.-]+$/
+            let regex = /^[A-Za-z0-9À-ú.-]+$/
     
             // if they have no value
             if (!inputValueTrim || inputValueTrim.length < 2 || !inputValueTrim.match(regex)) {
@@ -125,7 +125,7 @@ submitButton.addEventListener('click', e => {
         // if it's odd
         if (inputsContainerLength <= 1 ) {
             
-            console.log("more than 1 participant");
+            console.log("less than 1 participant");
 
             // prevent default form
             e.preventDefault();
