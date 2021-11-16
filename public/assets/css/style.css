@@ -60,3 +60,11 @@ h2 {
     background-color: #218380;
     color: white;
 }
+
+.modal-header {
+    background-color: #FFEAD2;
+}
+
+.modal-footer {
+    background-color: #FFEAD2;
+}
