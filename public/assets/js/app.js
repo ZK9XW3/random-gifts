@@ -17,7 +17,7 @@ addButton.addEventListener("click", e => {
 
     // Count nb of clicks on add button
     countAddButtonClicks += 1;
-    console.log(countAddButtonClicks);
+    // console.log(countAddButtonClicks);
 
     // Add to DOM
     // When add clicked insert a new input line
@@ -101,7 +101,7 @@ submitButton.addEventListener('click', e => {
         // if it's odd
         if (inputsContainerLength % 2 != 0 ) {
             
-            console.log("it's odd");
+            // console.log("it's odd");
 
             // prevent default form
             e.preventDefault();
@@ -125,7 +125,7 @@ submitButton.addEventListener('click', e => {
         // if it's odd
         if (inputsContainerLength <= 1 ) {
             
-            console.log("more than 1 participant");
+            // console.log("less than 1 participant");
 
             // prevent default form
             e.preventDefault();
