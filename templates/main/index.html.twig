@@ -21,20 +21,20 @@
         </div>
         <form action="{{ path('submit') }}" method="post" class="d-flex flex-column align-items-center mx-sm-5 mb-5 form-container needs-validation" id="form-container" novalidate>
             <div class="template-node">
-                <div class="inputs-container-0 d-flex">
+                <div class="inputs-container d-flex" id="inputs-container-0">
                     <div class="input-group-prepend">
                         <span class="input-group-text d-none d-lg-block">First and last name</span>
                     </div>
                     <input type="text" name="firstName0" aria-label="First name" class="form-control" id="first-name-input" placeholder="First name" required maxlength="20">
                     <input type="text" name="lastName0" aria-label="Last name" class="form-control" id="last-name-input" placeholder="Last name" required maxlength="20">
-                    <button type="button" class="btn btn-outline-danger btn-sm delete-btn-0">X</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm delete-btn" id="delete-btn-0">X</button>
                 </div>
                 {# Insert template here with JS #}
             </div>
             <div class="alert-box mt-2" id="alert-box" role="alert"></div>
             <div class="add-button-container mt-2">
                 <button type="button" class="btn btn-info add-button" id="add-button">Add participant</button>
-            </div>
+            </div>  
             <div class="submit-container mt-4">
                 <button type="submit" class="btn btn-info submit-btn">Submit</button>
             </div>
@@ -49,7 +49,7 @@
         </div>
         <input type="text" name="firstName" aria-label="First name" class="form-control" id="first-name-input-last" placeholder="First name" required maxlength="20">
         <input type="text" name="lastName" aria-label="Last name" class="form-control" id="last-name-input-last" placeholder="Last name" required maxlength="20">
-        <button type="button" class="btn btn-outline-danger btn-sm delete-btn">X</button>
+        <button type="button" class="btn btn-outline-danger btn-sm delete-btn" id="delete-btn">X</button>
     </div>
 </template>
 
