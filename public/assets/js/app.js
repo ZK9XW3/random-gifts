@@ -10,6 +10,7 @@ let firstNameError = document.getElementById('first-name-error');
 let inputs = document.getElementsByClassName('form-control');
 let alertBox = document.getElementById('alert-box');
 let inputsContainer = document.getElementsByClassName('inputs-container');
+let inputsContainerLast = document.querySelector('.inputs-container-last');
 
 
 //Listener on addButton
@@ -40,9 +41,25 @@ addButton.addEventListener("click", e => {
         document.getElementById('last-name-input-last').id = 'last-name-input-' + countAddButtonClicks;
     }
 
+    // When new line inserted add an indexed id to inputs-container and delete btn
+    function setInputsContainerId() {
+
+        // creating an id for the div. id = inputs-container-list{countAddButtonCliks}
+        document.querySelector('.inputs-container-last').setAttribute('id', 'inputs-container-' + countAddButtonClicks);
+        
+        // modifying container class
+        document.querySelector('.inputs-container-last').classList.replace('inputs-container-last', 'inputs-container-' + countAddButtonClicks);
+
+        // modifying delete-btn class = delete-btn-{countAddButtonClicks}
+        document.querySelector('.delete-btn').classList.replace('delete-btn', 'delete-btn-' + countAddButtonClicks);
+    }
+
+    // TODO céer une fonction pour supprimer la div inputs-container-{id} en fonction de l'id du delete button sur lequel on click
+
 
     insertInputsContainer();
     setInputName();
+    setInputsContainerId();
 
 
 })
@@ -141,3 +158,12 @@ submitButton.addEventListener('click', e => {
     isMoreThanOne();
 
 })
+
+
+function deleteField() {
+
+    // On ecoute le bouton de suppression
+    // On cible le field avec son id
+    // On retire le field du DOM
+    // 
+}
