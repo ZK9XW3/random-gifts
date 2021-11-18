@@ -1,4 +1,14 @@
-## Algorythm random picker
+# Random Gifts :santa: :mx_claus:
+Make your Secret Santa easier. Just put names under the magic tree and le thte magic tell you who's gonna get a gift from who.
+This project was made simple and the main goal was to work on an algorythm wich randomly picks a participant and makes sure everyone is gifting someone and receiving a gift. ++ The magic favors gifting someone who is not your family.
+
+### Website
+:fire: It's online for a few weeks here : https://random-gifts.osc-fr1.scalingo.io/
+
+### Tech stack 
+Symfony, javascript, PHP, bootstrap, twig.
+
+## The Algorythm in details
 - First we need to extract each participant form the participants array. We're doing so by using a foreach.
 - Then we generate a randomIndex with the randomIndex function
 - And generate a randomParticipant with the randomIndex we got;
