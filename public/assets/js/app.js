@@ -1,26 +1,51 @@
-// DOM element
+// DOM elements
 let addButton = document.getElementById('add-button');
-let newInputsContainer = document.querySelector('.new-inputs-container');
 let templateNode = document.querySelector('.template-node');
-let countAddButtonClicks = 0;
 let submitButton = document.querySelector('.submit-btn');
-let firstNameInput = document.getElementById('first-name-input');
-let lastNameInput = document.getElementById('last-name-input');
-let firstNameError = document.getElementById('first-name-error');
 let inputs = document.getElementsByClassName('form-control');
 let alertBox = document.getElementById('alert-box');
 let inputsContainer = document.getElementsByClassName('inputs-container');
+let deleteButtons = document.getElementsByClassName('delete-btn');
 
+/**
+ * count number of inputs-container
+ * param: number | default : 0
+ * param allows to modify the resulting index according to your needs (-0 or -1)
+ */
+function countInputIndex(number = 0) {
+
+    // inputs-container htmlcollection and we count them
+    let countInputsContainer = document.getElementsByClassName('inputs-container').length - number;
+    
+    return countInputsContainer;
+};
+
+/**
+ * delete the last and associated field when user click on delete button
+ */
+function deleteFields() {
+
+    for (let deleteButton of deleteButtons) {
+        
+        // listening to delete button
+        deleteButton.addEventListener('click', e => {
+
+            // get the id index of the delete button
+            let clickedDeleteButtonId =  deleteButton.id;
+            let clickedDeleteButtonIndex = clickedDeleteButtonId.slice(-1);
+
+            // delete container corresponding to the delete button (= the last one)
+            let deleteInputContainer = document.getElementById('inputs-container-' + clickedDeleteButtonIndex);
+            deleteInputContainer.remove();
+        });
+    }
+}
 
 //Listener on addButton
 addButton.addEventListener("click", e => {
 
-    // Count nb of clicks on add button
-    countAddButtonClicks += 1;
-    // console.log(countAddButtonClicks);
-
     // Add to DOM
-    // When add clicked insert a new input line
+    // When add clicked insert a new input line based on template
     function insertInputsContainer() {
 
         let template = document.getElementById('template');
@@ -31,20 +56,54 @@ addButton.addEventListener("click", e => {
     // When new line inserted set Input name for form to work with $_POST request
     function setInputName() {
 
-        // set attribute name a firstName{countAddButtonClicks} & lastName{countAddButtonClicks} .
-        document.getElementById('first-name-input-last').setAttribute('name', 'firstName' + countAddButtonClicks);
-        document.getElementById('last-name-input-last').setAttribute('name', 'lastName' + countAddButtonClicks);
+        let countActualIndex = countInputIndex(0);
+
+        // set attribute name a firstName{countActualIndex} & lastName{countActualIndex} .
+        document.getElementById('first-name-input-last').setAttribute('name', 'firstName' + countActualIndex);
+        document.getElementById('last-name-input-last').setAttribute('name', 'lastName' + countActualIndex);
 
         // Modifier l'id pour le passer de first-name-input-last & last-name-input-last => first-name-input & last-name-input
-        document.getElementById('first-name-input-last').id = 'first-name-input-' + countAddButtonClicks;
-        document.getElementById('last-name-input-last').id = 'last-name-input-' + countAddButtonClicks;
+        document.getElementById('first-name-input-last').id = 'first-name-input-' + countActualIndex;
+        document.getElementById('last-name-input-last').id = 'last-name-input-' + countActualIndex;
     }
 
+    // When new line inserted add an indexed id to inputs-container and delete btn
+    function setInputsContainerId() {
 
+        let countActualIndex = countInputIndex(0);
+
+        // creating an id for the container. id = inputs-container-list{countActualIndex}
+        document.querySelector('.inputs-container-last').setAttribute('id', 'inputs-container-' + countActualIndex);
+                
+        // modifying container class
+        document.querySelector('.inputs-container-last').classList.replace('inputs-container-last', 'inputs-container');
+
+        // modifying delete-btn id = delete-btn-{countActualIndex}
+        document.getElementById('delete-btn').setAttribute('id', 'delete-btn-' + countActualIndex);
+
+    }
+
+    // When adding a new line previous line delete button is removed
+    function removeDeleteButton() {
+
+        // target previous line
+        let inputIndexToRemove = countInputIndex(1);
+        console.log('delete button to remove is ' + inputIndexToRemove);
+        let deleteButtonToRemove = document.getElementById('delete-btn-' + inputIndexToRemove);
+        
+        // if there are at least 2 existing input => remove the targeted line
+        if (deleteButtonToRemove != null) {
+            
+            deleteButtonToRemove.remove();
+
+        }
+    }
+
+    removeDeleteButton();
     insertInputsContainer();
     setInputName();
-
-
+    setInputsContainerId();
+    deleteFields();
 })
 
 // Listener on SubmitButton
@@ -61,8 +120,8 @@ submitButton.addEventListener('click', e => {
             // Trim all the inputs
             let inputValueTrim = input.value.trim();
     
-            // regex checking the input is md only of letters digit and hyphen
-            let regex = /^[A-Za-z0-9.-]+$/
+            // regex checking the input is made only of letters digit and hyphen
+            let regex = /^[A-Za-z0-9À-ú.-]+$/
     
             // if they have no value
             if (!inputValueTrim || inputValueTrim.length < 2 || !inputValueTrim.match(regex)) {
@@ -88,45 +147,20 @@ submitButton.addEventListener('click', e => {
         }
     }
 
-    /**
-     * ! UNUSED check if the number of participants are even
-     */
-    function isEven() {
-        
-        // check participants are even and not odd
-        // check how many inputs-container class inputs we have
-        let inputsContainerLength = inputsContainer.length;
-        
-    
-        // if it's odd
-        if (inputsContainerLength % 2 != 0 ) {
-            
-            // console.log("it's odd");
-
-            // prevent default form
-            e.preventDefault();
-     
-            // and add message to the alertBox
-            alertBox.innerHTML = "For the magic to happen participants must be even !!";
-            
-        }
-    }
+ 
 
     /**
      * check if there is at least two participants
      */
      function isMoreThanOne() {
         
-        // check participants are even and not odd
         // check how many inputs-container class inputs we have
-        let inputsContainerLength = inputsContainer.length;
+        let inputsContainerLength = countInputIndex();
         
     
         // if it's odd
         if (inputsContainerLength <= 1 ) {
-            
-            // console.log("less than 1 participant");
-
+           
             // prevent default form
             e.preventDefault();
      
@@ -137,7 +171,13 @@ submitButton.addEventListener('click', e => {
     }
 
 
+    // On submit check values and more than one participant
     checkInputsValue();
     isMoreThanOne();
 
 })
+
+
+
+
+
