@@ -2,7 +2,6 @@
 let addButton = document.getElementById('add-button');
 let newInputsContainer = document.querySelector('.new-inputs-container');
 let templateNode = document.querySelector('.template-node');
-let countAddButtonClicks = 0;
 let submitButton = document.querySelector('.submit-btn');
 let firstNameInput = document.getElementById('first-name-input');
 let lastNameInput = document.getElementById('last-name-input');
@@ -13,21 +12,16 @@ let inputsContainer = document.getElementsByClassName('inputs-container');
 let inputsContainerLast = document.querySelector('.inputs-container-last');
 let deleteButtons = document.getElementsByClassName('delete-btn');
 
-function countInputIndex() {
+function countInputIndex(number) {
     // on crée une collection de tous les inputs-container
     // on compte le nombre de inputs-container existant
-    let countInputsContainer = document.getElementsByClassName('inputs-container').length;
-    console.log(countInputsContainer);
+    let countInputsContainer = document.getElementsByClassName('inputs-container').length - number;
+    // console.log(countInputsContainer);
     return countInputsContainer;
 };
 
 //Listener on addButton
 addButton.addEventListener("click", e => {
-
-    countInputIndex();
-    // Count nb of clicks on add button
-    countAddButtonClicks += 1;
-    // console.log(countAddButtonClicks);
 
     // Add to DOM
     // When add clicked insert a new input line
@@ -41,30 +35,52 @@ addButton.addEventListener("click", e => {
     // When new line inserted set Input name for form to work with $_POST request
     function setInputName() {
 
-        // set attribute name a firstName{countAddButtonClicks} & lastName{countAddButtonClicks} .
-        document.getElementById('first-name-input-last').setAttribute('name', 'firstName' + countAddButtonClicks);
-        document.getElementById('last-name-input-last').setAttribute('name', 'lastName' + countAddButtonClicks);
+        let countActualIndex = countInputIndex(0);
+        console.log('from setInputName count is ' + countActualIndex);
+
+        // set attribute name a firstName{countActualIndex} & lastName{countActualIndex} .
+        document.getElementById('first-name-input-last').setAttribute('name', 'firstName' + countActualIndex);
+        document.getElementById('last-name-input-last').setAttribute('name', 'lastName' + countActualIndex);
 
         // Modifier l'id pour le passer de first-name-input-last & last-name-input-last => first-name-input & last-name-input
-        document.getElementById('first-name-input-last').id = 'first-name-input-' + countAddButtonClicks;
-        document.getElementById('last-name-input-last').id = 'last-name-input-' + countAddButtonClicks;
+        document.getElementById('first-name-input-last').id = 'first-name-input-' + countActualIndex;
+        document.getElementById('last-name-input-last').id = 'last-name-input-' + countActualIndex;
     }
 
     // When new line inserted add an indexed id to inputs-container and delete btn
     function setInputsContainerId() {
 
-        // creating an id for the container. id = inputs-container-list{countAddButtonCliks}
-        document.querySelector('.inputs-container-last').setAttribute('id', 'inputs-container-' + countAddButtonClicks);
+        let countActualIndex = countInputIndex(0);
+        console.log('from setInputsContainer count is ' + countActualIndex);
+
+        // creating an id for the container. id = inputs-container-list{countActualIndex}
+        document.querySelector('.inputs-container-last').setAttribute('id', 'inputs-container-' + countActualIndex);
                 
         // modifying container class
         document.querySelector('.inputs-container-last').classList.replace('inputs-container-last', 'inputs-container');
 
-        // modifying delete-btn id = delete-btn-{countAddButtonClicks}
-        document.getElementById('delete-btn').setAttribute('id', 'delete-btn-' + countAddButtonClicks);
+        // modifying delete-btn id = delete-btn-{countActualIndex}
+        document.getElementById('delete-btn').setAttribute('id', 'delete-btn-' + countActualIndex);
 
     }
 
+    // When adding a new line previous line delete button is removed
+    function removeDeleteButton() {
+        // target previous line
+        let inputIndexToRemove = countInputIndex(1);
+        console.log('delete button to remove is ' + inputIndexToRemove);
+        let deleteButtonToRemove = document.getElementById('delete-btn-' + inputIndexToRemove);
+        
+        // if there are at least 2 existing input => remove the targeted line
+        if (deleteButtonToRemove != null) {
+            
+            deleteButtonToRemove.remove();
+
+        }
+    }
+
     
+    removeDeleteButton();
     insertInputsContainer();
     setInputName();
     setInputsContainerId();
@@ -177,19 +193,12 @@ function deleteFields() {
         
         deleteButton.addEventListener('click', e => {
 
-            // On count le nombre d'inputs
-            countInputIndex();
-            // TODO count number of inputs-container in the collectionHTML
-            // TODO Give the classes and ids the index based of the number of inputsContainer so it considers the deleted inputs
-            // TODO do this when clicking add button and when clicking delete button
-            // alert('delete button id = ' + deleteButton.id);
-            // console.log('delete button id = ' + deleteButton.id);
+            console.log('delete button id = ' + deleteButton.id);
 
-            // Delete associated input-container
             // recuperer l'id du delete button sur lequel on à cliqué
             let clickedDeleteButtonId =  deleteButton.id;
             let clickedDeleteButtonIndex = clickedDeleteButtonId.slice(-1);
-            console.log(clickedDeleteButtonIndex);
+            console.log('id to delete' + clickedDeleteButtonIndex);
 
             // delete le container correspondant à l'id du delete-btn
             let deleteInputContainer = document.getElementById('inputs-container-' + clickedDeleteButtonIndex);
@@ -197,7 +206,5 @@ function deleteFields() {
         });
     }
 }
-
-// deleteFields();
 
 
