@@ -1,30 +1,51 @@
-// DOM element
+// DOM elements
 let addButton = document.getElementById('add-button');
-let newInputsContainer = document.querySelector('.new-inputs-container');
 let templateNode = document.querySelector('.template-node');
 let submitButton = document.querySelector('.submit-btn');
-let firstNameInput = document.getElementById('first-name-input');
-let lastNameInput = document.getElementById('last-name-input');
-let firstNameError = document.getElementById('first-name-error');
 let inputs = document.getElementsByClassName('form-control');
 let alertBox = document.getElementById('alert-box');
 let inputsContainer = document.getElementsByClassName('inputs-container');
-let inputsContainerLast = document.querySelector('.inputs-container-last');
 let deleteButtons = document.getElementsByClassName('delete-btn');
 
-function countInputIndex(number) {
-    // on crée une collection de tous les inputs-container
-    // on compte le nombre de inputs-container existant
+/**
+ * count number of inputs-container
+ * param: number | default : 0
+ * param allows to modify the resulting index according to your needs (-0 or -1)
+ */
+function countInputIndex(number = 0) {
+
+    // inputs-container htmlcollection and we count them
     let countInputsContainer = document.getElementsByClassName('inputs-container').length - number;
-    // console.log(countInputsContainer);
+    
     return countInputsContainer;
 };
+
+/**
+ * delete the last and associated field when user click on delete button
+ */
+function deleteFields() {
+
+    for (let deleteButton of deleteButtons) {
+        
+        // listening to delete button
+        deleteButton.addEventListener('click', e => {
+
+            // get the id index of the delete button
+            let clickedDeleteButtonId =  deleteButton.id;
+            let clickedDeleteButtonIndex = clickedDeleteButtonId.slice(-1);
+
+            // delete container corresponding to the delete button (= the last one)
+            let deleteInputContainer = document.getElementById('inputs-container-' + clickedDeleteButtonIndex);
+            deleteInputContainer.remove();
+        });
+    }
+}
 
 //Listener on addButton
 addButton.addEventListener("click", e => {
 
     // Add to DOM
-    // When add clicked insert a new input line
+    // When add clicked insert a new input line based on template
     function insertInputsContainer() {
 
         let template = document.getElementById('template');
@@ -36,7 +57,6 @@ addButton.addEventListener("click", e => {
     function setInputName() {
 
         let countActualIndex = countInputIndex(0);
-        console.log('from setInputName count is ' + countActualIndex);
 
         // set attribute name a firstName{countActualIndex} & lastName{countActualIndex} .
         document.getElementById('first-name-input-last').setAttribute('name', 'firstName' + countActualIndex);
@@ -51,7 +71,6 @@ addButton.addEventListener("click", e => {
     function setInputsContainerId() {
 
         let countActualIndex = countInputIndex(0);
-        console.log('from setInputsContainer count is ' + countActualIndex);
 
         // creating an id for the container. id = inputs-container-list{countActualIndex}
         document.querySelector('.inputs-container-last').setAttribute('id', 'inputs-container-' + countActualIndex);
@@ -66,6 +85,7 @@ addButton.addEventListener("click", e => {
 
     // When adding a new line previous line delete button is removed
     function removeDeleteButton() {
+
         // target previous line
         let inputIndexToRemove = countInputIndex(1);
         console.log('delete button to remove is ' + inputIndexToRemove);
@@ -79,14 +99,11 @@ addButton.addEventListener("click", e => {
         }
     }
 
-    
     removeDeleteButton();
     insertInputsContainer();
     setInputName();
     setInputsContainerId();
     deleteFields();
-
-
 })
 
 // Listener on SubmitButton
@@ -103,7 +120,7 @@ submitButton.addEventListener('click', e => {
             // Trim all the inputs
             let inputValueTrim = input.value.trim();
     
-            // regex checking the input is md only of letters digit and hyphen
+            // regex checking the input is made only of letters digit and hyphen
             let regex = /^[A-Za-z0-9À-ú.-]+$/
     
             // if they have no value
@@ -131,37 +148,12 @@ submitButton.addEventListener('click', e => {
     }
 
     /**
-     * ! UNUSED check if the number of participants are even
-     */
-    function isEven() {
-        
-        // check participants are even and not odd
-        // check how many inputs-container class inputs we have
-        let inputsContainerLength = inputsContainer.length;
-        
-    
-        // if it's odd
-        if (inputsContainerLength % 2 != 0 ) {
-            
-            console.log("it's odd");
-
-            // prevent default form
-            e.preventDefault();
-     
-            // and add message to the alertBox
-            alertBox.innerHTML = "For the magic to happen participants must be even !!";
-            
-        }
-    }
-
-    /**
      * check if there is at least two participants
      */
      function isMoreThanOne() {
         
-        // check participants are even and not odd
         // check how many inputs-container class inputs we have
-        let inputsContainerLength = inputsContainer.length;
+        let inputsContainerLength = countInputIndex();
         
     
         // if it's odd
@@ -179,32 +171,13 @@ submitButton.addEventListener('click', e => {
     }
 
 
+    // On submit check values and more than one participant
     checkInputsValue();
     isMoreThanOne();
 
 })
 
 
-// function
-function deleteFields() {
 
-    for (let deleteButton of deleteButtons) {
-
-        
-        deleteButton.addEventListener('click', e => {
-
-            console.log('delete button id = ' + deleteButton.id);
-
-            // recuperer l'id du delete button sur lequel on à cliqué
-            let clickedDeleteButtonId =  deleteButton.id;
-            let clickedDeleteButtonIndex = clickedDeleteButtonId.slice(-1);
-            console.log('id to delete' + clickedDeleteButtonIndex);
-
-            // delete le container correspondant à l'id du delete-btn
-            let deleteInputContainer = document.getElementById('inputs-container-' + clickedDeleteButtonIndex);
-            deleteInputContainer.remove();
-        });
-    }
-}
 
 
