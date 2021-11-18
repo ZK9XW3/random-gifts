@@ -147,6 +147,8 @@ submitButton.addEventListener('click', e => {
         }
     }
 
+ 
+
     /**
      * check if there is at least two participants
      */
@@ -158,9 +160,7 @@ submitButton.addEventListener('click', e => {
     
         // if it's odd
         if (inputsContainerLength <= 1 ) {
-            
-            console.log("less than 1 participant");
-
+           
             // prevent default form
             e.preventDefault();
      
