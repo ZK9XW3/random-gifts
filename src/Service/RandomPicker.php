@@ -49,7 +49,7 @@ class RandomPicker
         // On prends le participant et on l'associe avec un pariticpant random
         foreach ($participants as $currentParticipant) {
 
-            dump('start a new foreach iteration');
+            // dump('start a new foreach iteration');
 
             // on choisi un nombre au hasard avec notre fonction randomIndex
             $validRandomIndex = $this->randomIndex($participants, $maxIndex);
@@ -59,49 +59,49 @@ class RandomPicker
 
             // On fait une association servant uniquement au test, entre le participant Current et le random participant
             $association = [$currentParticipant, $randomParticipant];
-            dump($association);
-            dump("there are " . count($participants) . " participants left");
+            // dump($association);
+            // dump("there are " . count($participants) . " participants left");
 
             //! if this is the last value in participants array
             if (count($participants) == 1) {
 
-                dump('this is the last value in participants array');
-                dump($currentParticipant, $randomParticipant);
+                // dump('this is the last value in participants array');
+                // dump($currentParticipant, $randomParticipant);
 
                 //! Si currentParticipant == randomParticipant on modifie le tableau results // on aurait pu refaire le tirage aussi
                 if ($currentParticipant == $randomParticipant) {
                     
-                    dump('switching results');
+                    // dump('switching results');
 
                     // on recuperes le dernier receiver du tableau results
                     $lastArrayReceiver = end($results)['receiver'];
-                    dump($lastArrayReceiver);
+                    // dump($lastArrayReceiver);
 
                     // On recuperes la clef du dernier element du tableau results
                     $lastKeyResults = array_key_last($results);
-                    dump("the key of the last array element is " . $lastKeyResults);
+                    // dump("the key of the last array element is " . $lastKeyResults);
 
                     // On modifie l'entrée du tableau pout mettre notre current participant comme receiver
                     $results[$lastKeyResults]['receiver'] = ['firstName' => $currentParticipant['firstName'], 'lastName' => $currentParticipant['lastName']]; 
-                    dump($results);
+                    // dump($results);
 
                     // on  crée une nouvelle = la dernière ligne du tableau et on ajoute lastArrayReceiver comme receiver
                     $results[] = ['giver' => $currentParticipant, 'receiver' => $lastArrayReceiver];
-                    dump($results);    
+                    // dump($results);    
 
                 } 
                 //! if currentParticipant != randomParticipant
                 else {
 
-                    dump("in the else of the last participant if");
+                    // dump("in the else of the last participant if");
 
                     // On insere dans le tableau l'association valide sous la forme giver - receiver
                     $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
-                    dump($results);
+                    // dump($results);
 
                     // on retire le receiver du tableau des participants par son index
                     unset($participants[$validRandomIndex]);
-                    dump($participants);
+                    // dump($participants);
                 }
             };
 
@@ -136,30 +136,30 @@ class RandomPicker
                     }
                 
                 }
-                dump('i get out of the hard while after iterations = ' . $i);
+                // dump('i get out of the hard while after iterations = ' . $i);
             
             
                 //! while with lightest constraints = only makes that currentParticipant != randomParticipant
                 // Si on a pas pu valider le while precedent on execute ce while avec des conditions moins exigeantes
                 while ($currentParticipant == $randomParticipant) {
 
-                    dump("in the easy while");
+                    // dump("in the easy while");
 
                     $validRandomIndex = $this->randomIndex($participants, $maxIndex);
 
                     $randomParticipant = $participants[$validRandomIndex];
                 }
 
-                dump($currentParticipant, $randomParticipant);
+                // dump($currentParticipant, $randomParticipant);
 
                 //! Inserting in results and removing from participants
                 // On insere dans le tableau l'association valide sous la forme giver - receiver
                 $results[] = ['giver' => $currentParticipant, 'receiver' => $randomParticipant];
-                dump($results);
+                // dump($results);
 
                 // on retire le receiver du tableau des participants par son index
                 unset($participants[$validRandomIndex]);
-                dump($participants);
+                // dump($participants);
 
             }
         }
